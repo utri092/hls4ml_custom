@@ -8,6 +8,6 @@ hls4ml convert -c keras-config-nn1.yml
 cd my-hls-test
 # Activate Vivado HLS CLI
 source ~/Xilinx/Vivado/2020.1/settings64.sh
-# Pre Sythesis Simulation & Sythesis (simlulation results print on terminal)
+# Pre Synthesis Simulation & Synthesis (simlulation results print on terminal)
 vivado_hls -f build_prj.tcl "synth=1 csim=1 export=0 cosim=0"
 

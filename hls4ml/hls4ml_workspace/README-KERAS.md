@@ -1,4 +1,5 @@
 # Keras to HLS 
+# HLS version
 
 Reads Keras model json for architecture and hdf5 for weights and biases.
 Alternatively, specify whole model in hdf5. Json file is not needed
@@ -22,26 +23,32 @@ Examples are in the directory: `example-keras-model-files`
 
 # Instructions to run. 
 
-## This generated the HLS project dir and performs a C-Simulation in terminal to see program behavior before synthesis.
+## Generates the HLS project
+## HLS4ML generates the project in a directory called 
+## A seperate directory called Firmware is generated. This does not ...., this does .... 
+## performs a C-Simulation in terminal (to see program behavior before synthesis)
 ```
 chmod +x createHLSProject.sh
 ./createHLSProject.sh
 ```
 
-## Running HLS CLI. This does pre-synthesis-simulation, synthesis, post-synthesis simulation and exports an IP Block
-## Setting synth=0 will disable cosim and export as well
+## Runs HLS CLI. This does pre-synthesis-simulation, synthesis, post-synthesis simulation and exports an IP Block
+## ! Setting synth=0 will disable cosim and export as well
 ```
 cd my-hls-test/
 vivado_hls -f build_prj.tcl "csim=1 synth=1 cosim=1 export=1"
 ```
 
-## Running HLS GUI. <project_dir> is not the firmware folder. Needed if protocol interface needs to be changed according to processor
+## Running HLS GUI for HLS project. 
+
+
 ```
+
 cd my-hls-test/
 vivado_hls -f build_prj.tcl "csim=1"
 vivado_hls -p <project_dir>
 ```
-### If customising files in GUI
+### If customising HLS Project in GUI
 ```
 chmod +x launchGeneratedProject.sh
 ./launchGeneratedProject.sh
