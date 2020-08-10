@@ -1,0 +1,29 @@
+# Model Architecture (Only if weights are specified)
+# KerasJson: parkingModels/model2.json
+# Model weights or whole model in .h5 format
+KerasH5: saveZoo/model.h5
+InputData: parkingModels/inputs.npy
+OutputPredictions: parkingModels/outputs.npy
+OutputDir: my-hls-test
+ProjectName: myproject
+XilinxPart: xc7z020clg400-1
+# In ns
+ClockPeriod: 10
+Backend: Vivado
+# options: io_serial/io_parallel
+IOType: io_parallel 
+HLSConfig:
+  Model:
+    Precision: ap_fixed<32, 32>
+    ReuseFactor: 3
+    Strategy: Latency
+  # LayerType:
+  #   Dense:
+  #     # ReuseFactor: 1
+  #     Precision: 
+  #       weight: ap_fixed<64,0>
+  #       bias: ap_fixed<64,0>
+  #       result: ap_fixed<128,64>
+  #   Relu:
+  #     # ReuseFactor: 1
+  #     Precision: ap_fixed<32, 32>
