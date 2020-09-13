@@ -2,8 +2,8 @@
 # KerasJson: parkingModels/model2.json
 # Model weights or whole model in .h5 format
 KerasH5: saveZoo/model.h5
-InputData: parkingModels/inputs.npy
-OutputPredictions: parkingModels/outputs.npy
+InputData: simFiles/inputs.npy
+OutputPredictions: simFiles/outputs.npy
 OutputDir: my-hls-test
 ProjectName: myproject
 XilinxPart: xc7z020clg400-1

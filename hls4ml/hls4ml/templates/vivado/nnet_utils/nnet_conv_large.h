@@ -11,12 +11,12 @@ template<class data_T, typename CONFIG_T>
 void im2col_1d(data_T data[CONFIG_T::n_in * CONFIG_T::n_chan], data_T data_col[CONFIG_T::filt_width * CONFIG_T::n_chan * CONFIG_T::n_out]) {
     //int index = 0;
     for (int channel = CONFIG_T::n_chan; channel--; data += CONFIG_T::n_in) {
-        #pragma HLS PIPELINE II=1 rewind
+        #pragma HLS pipeline II=1 rewind
 		for (int kernel_col = 0; kernel_col < CONFIG_T::filt_width; kernel_col++) {
-            #pragma HLS UNROLL
+            #pragma HLS unroll
             int input_col = -CONFIG_T::pad_left + kernel_col * CONFIG_T::dilation;
             for (int output_col = CONFIG_T::n_out; output_col; output_col--) {
-                #pragma HLS UNROLL
+                #pragma HLS unroll
                 if (input_col >= 0 && input_col < CONFIG_T::n_in) {
                     *(data_col++) = data[input_col];
                     //data_col[index] = data[input_col];
@@ -43,14 +43,14 @@ void conv_1d_full(
     data_T data_col[CONFIG_T::filt_width * CONFIG_T::n_chan];
     res_T res_col[CONFIG_T::n_filt];
     
-    //#pragma HLS ARRAY_PARTITION variable=data_conv complete
-    #pragma HLS ARRAY_PARTITION variable=data_col complete
-    #pragma HLS ARRAY_PARTITION variable=res_col complete
+    //#pragma HLS array_partition variable=data_conv complete
+    #pragma HLS array_partition variable=data_col complete
+    #pragma HLS array_partition variable=res_col complete
 
     im2col_1d<data_T, CONFIG_T>(data, data_conv);
 
     for (int i = 0; i < CONFIG_T::n_out; i++) {
-        #pragma HLS UNROLL
+        #pragma HLS unroll
         for (int j = 0; j < CONFIG_T::filt_width * CONFIG_T::n_chan; j++) {
             data_col[j] = data_conv[j * CONFIG_T::n_out + i];
         }
@@ -66,11 +66,11 @@ template<class data_T, typename CONFIG_T>
 void im2col_1d_cf_idx(data_T data[CONFIG_T::n_in * CONFIG_T::n_chan], data_T data_col[CONFIG_T::filt_width * CONFIG_T::n_chan], const int col) {
     ChannelLoop:
     for (int channel = 0; channel < CONFIG_T::n_chan; channel++) {
-		//#pragma HLS UNROLL
-        #pragma HLS PIPELINE II=1 rewind
+		//#pragma HLS unroll
+        #pragma HLS pipeline II=1 rewind
         KernelLoop:
         for (int kernel_col = 0; kernel_col < CONFIG_T::filt_width; kernel_col++) {
-            #pragma HLS UNROLL
+            #pragma HLS unroll
             int input_col = -CONFIG_T::pad_left + kernel_col * CONFIG_T::dilation + col * CONFIG_T::stride;
             if (input_col >= 0 && input_col < CONFIG_T::n_in) {
                 //*(data_col++) = data[input_col];
@@ -88,7 +88,7 @@ void im2col_1d_cf(data_T data[CONFIG_T::n_in * CONFIG_T::n_chan], data_T data_co
     int index = 0;
     ChannelLoop:
     for (int channel = CONFIG_T::n_chan; channel--; data += CONFIG_T::n_in) {
-		#pragma HLS UNROLL
+		#pragma HLS unroll
         KernelLoop:
         for (int kernel_col = 0; kernel_col < CONFIG_T::filt_width; kernel_col++) {
             int input_col = -CONFIG_T::pad_left + kernel_col * CONFIG_T::dilation + col * CONFIG_T::stride;
@@ -118,19 +118,19 @@ void conv_1d_large_cf(
     const int block_factor = DIV_ROUNDUP(nin*nout, rufactor);
 
     //#pragma HLS function_instantiate variable=weights,biases
-    //#pragma HLS RESOURCE         variable=weights core=RAM_2P_BRAM Commenting out the deisgnation HLS seems to choose correctly
-    //#pragma HLS ARRAY_RESHAPE   variable=weights block factor=block_factor
-    //#pragma HLS ARRAY_PARTITION variable=biases complete
+    //#pragma HLS resource         variable=weights core=RAM_2P_BRAM Commenting out the deisgnation HLS seems to choose correctly
+    //#pragma HLS array_reshape   variable=weights block factor=block_factor
+    //#pragma HLS array_partition variable=biases complete
 
     data_T data_col[CONFIG_T::filt_width * CONFIG_T::n_chan];
     res_T res_col[CONFIG_T::n_filt];
 
-    #pragma HLS ARRAY_PARTITION variable=data_col complete
-    #pragma HLS ARRAY_PARTITION variable=res_col complete
+    #pragma HLS array_partition variable=data_col complete
+    #pragma HLS array_partition variable=res_col complete
 
     ColLoop:
     for (int i = 0; i < CONFIG_T::n_out; i++) {
-        #pragma HLS PIPELINE
+        #pragma HLS pipeline
         im2col_1d_cf<data_T, CONFIG_T>(data, data_col, i);
         dense_large<data_T, res_T, typename CONFIG_T::mult_config>(data_col, res_col, weights, biases);
         for (int j = 0; j < CONFIG_T::n_filt; j++) {
@@ -145,7 +145,7 @@ void im2col_1d_cl(data_T data[CONFIG_T::n_in * CONFIG_T::n_chan], data_T data_co
     int index = 0;
     ChannelLoop:
     for (int channel = CONFIG_T::n_chan; channel--; data++) {
-		#pragma HLS UNROLL
+		#pragma HLS unroll
         KernelLoop:
         for (int kernel_col = 0; kernel_col < CONFIG_T::filt_width; kernel_col++) {
             int input_col = -CONFIG_T::pad_left + kernel_col * CONFIG_T::dilation + col * CONFIG_T::stride;
@@ -175,19 +175,19 @@ void conv_1d_large_cl(
     const int block_factor = DIV_ROUNDUP(nin*nout, rufactor);
 
     //#pragma HLS function_instantiate variable=weights,biases
-    //#pragma HLS RESOURCE         variable=weights core=RAM_2P_BRAM Commenting out the deisgnation HLS seems to choose correctly
-    //#pragma HLS ARRAY_RESHAPE   variable=weights block factor=block_factor
-    //#pragma HLS ARRAY_PARTITION variable=biases complete
+    //#pragma HLS resource         variable=weights core=RAM_2P_BRAM Commenting out the deisgnation HLS seems to choose correctly
+    //#pragma HLS array_reshape   variable=weights block factor=block_factor
+    //#pragma HLS array_partition variable=biases complete
 
     data_T data_col[CONFIG_T::filt_width * CONFIG_T::n_chan];
     res_T res_col[CONFIG_T::n_filt];
 
-    #pragma HLS ARRAY_PARTITION variable=data_col complete
-    #pragma HLS ARRAY_PARTITION variable=res_col complete
+    #pragma HLS array_partition variable=data_col complete
+    #pragma HLS array_partition variable=res_col complete
 
     ColLoop:
     for (int i = 0; i < CONFIG_T::n_out; i++) {
-        #pragma HLS PIPELINE
+        #pragma HLS pipeline
         im2col_1d_cl<data_T, CONFIG_T>(data, data_col, i);
         dense_large<data_T, res_T, typename CONFIG_T::mult_config>(data_col, res_col, weights, biases);
         for (int j = 0; j < CONFIG_T::n_filt; j++) {

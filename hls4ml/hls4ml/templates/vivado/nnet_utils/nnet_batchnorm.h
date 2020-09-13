@@ -61,26 +61,26 @@ void normalize(
         // For parallel inputs:
         //   - completely partition arrays -- target fabric
         //   - if we have an unroll factor, limit number of multipliers
-        #pragma HLS PIPELINE II=CONFIG_T::reuse_factor
+        #pragma HLS pipeline II=CONFIG_T::reuse_factor
 
-        // #pragma HLS ARRAY_PARTITION variable=weights complete // remove this line for now, it breaks compression sometimes
-        #pragma HLS ARRAY_PARTITION variable=scale complete
-        #pragma HLS ARRAY_PARTITION variable=bias complete
+        // #pragma HLS array_partition variable=weights complete // remove this line for now, it breaks compression sometimes
+        #pragma HLS array_partition variable=scale complete
+        #pragma HLS array_partition variable=bias complete
 
         int multiplier_limit  = ceil(float(CONFIG_T::n_in) / float(CONFIG_T::reuse_factor));
-        #pragma HLS ALLOCATION instances=mul limit=multiplier_limit operation
+        #pragma HLS allocation instances=mul limit=multiplier_limit operation
 
     } else if (CONFIG_T::io_type == io_serial) {
-        #pragma HLS ARRAY_RESHAPE variable=scale complete dim=1
-        #pragma HLS ARRAY_RESHAPE variable=bias complete dim=1
-        #pragma HLS DATAFLOW
+        #pragma HLS array_reshape variable=scale complete dim=1
+        #pragma HLS array_reshape variable=bias complete dim=1
+        #pragma HLS dataflow
     }            
 
     // Calcuate result
     Result: for (int ires = 0; ires < CONFIG_T::n_in; ires++) {
         if (CONFIG_T::io_type == io_serial){
-            #pragma HLS UNROLL
-            #pragma HLS PIPELINE
+            #pragma HLS unroll
+            #pragma HLS pipeline
         }
         
         if (CONFIG_T::n_filt==-1) {
@@ -111,15 +111,15 @@ template<class data_T, typename CONFIG_T>
 void  normalize_binary_tanh(data_T data[CONFIG_T::n_in], ap_uint<1> res[CONFIG_T::n_in], data_T threshold[CONFIG_T::n_in])
 {
     if (CONFIG_T::io_type == io_parallel){
-        #pragma HLS PIPELINE
-        #pragma HLS ARRAY_PARTITION variable=res complete
+        #pragma HLS pipeline
+        #pragma HLS array_partition variable=res complete
     }
 
     data_T datareg;   
     ap_uint<1> cache; 
     for (int ii=0; ii<CONFIG_T::n_in; ii++) {
         if (CONFIG_T::io_type == io_serial){
-            #pragma HLS PIPELINE
+            #pragma HLS pipeline
         }
         datareg = data[ii];	 
         if( datareg > threshold[ii] ) cache = 1;
@@ -134,15 +134,15 @@ template<class data_T, typename CONFIG_T>
 void  normalize_ternary_tanh(data_T data[CONFIG_T::n_in], ap_int<2> res[CONFIG_T::n_in], data_T threshold_hi[CONFIG_T::n_in], data_T threshold_lo[CONFIG_T::n_in])
 {
     if (CONFIG_T::io_type == io_parallel){
-        #pragma HLS PIPELINE
-        #pragma HLS ARRAY_PARTITION variable=res complete
+        #pragma HLS pipeline
+        #pragma HLS array_partition variable=res complete
     }
 
     data_T datareg;   
     ap_int<2> cache; 
     for (int ii=0; ii<CONFIG_T::n_in; ii++) {
         if (CONFIG_T::io_type == io_serial){
-            #pragma HLS PIPELINE
+            #pragma HLS pipeline
         }
         datareg = data[ii];
         if( datareg > threshold_hi[ii] ) cache = 1;

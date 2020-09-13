@@ -24,7 +24,7 @@ void resize_nearest(
     int x_ratio = (int)((CONFIG_T::width << 16) / CONFIG_T::new_width) + 1;
     int x2, y2;
 
-    #pragma HLS PIPELINE II=CONFIG_T::reuse_factor
+    #pragma HLS pipeline II=CONFIG_T::reuse_factor
 
     for (int i = 0; i < CONFIG_T::new_height; i++) {
         for (int j = 0; j < CONFIG_T::new_width; j++) {

@@ -95,19 +95,19 @@ void conv_1d_latency_cl(
     typename CONFIG_T::accum_t mult[CONFIG_T::n_out * CONFIG_T::n_filt * CONFIG_T::n_chan * CONFIG_T::filt_width];
     typename CONFIG_T::accum_t acc[CONFIG_T::n_out][CONFIG_T::n_filt];
 
-    #pragma HLS ARRAY_PARTITION variable=mult complete dim=0
-    #pragma HLS ARRAY_PARTITION variable=acc complete dim=0
+    #pragma HLS array_partition variable=mult complete dim=0
+    #pragma HLS array_partition variable=acc complete dim=0
 
     // Use a function_instantiate in case it helps to explicitly optimize unchanging weights/biases
     #pragma HLS function_instantiate variable=weights,biases
 
     // Parallel mode
-    #pragma HLS PIPELINE
-    #pragma HLS ARRAY_PARTITION variable=biases complete dim=0
+    #pragma HLS pipeline
+    #pragma HLS array_partition variable=biases complete dim=0
 
     // Limit multipliers to control parallelization
     const int multiplier_limit = compute_multiplier_limit<CONFIG_T>(weights);
-    #pragma HLS ALLOCATION instances=mul limit=multiplier_limit operation
+    #pragma HLS allocation instances=mul limit=multiplier_limit operation
 
     // Convolve, saving all multiplication results to accumulate later
     ConvOut: for(int ii = 0; ii < CONFIG_T::n_out; ii++) {

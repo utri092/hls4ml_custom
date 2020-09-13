@@ -3,7 +3,7 @@ rm -rf my-hls-test/
 # Activate venv environmenent (this has the hls4ml package) 
 source ../../pyHLSVenv/bin/activate
 # Use hls4ml to generate Vivado HLS Project (generates a directory 
-hls4ml convert -c keras-config-nn1.yml 
+hls4ml convert -c keras-config-nn3.yml 
 # Go to the created directory
 cd my-hls-test
 # Activate Vivado HLS CLI

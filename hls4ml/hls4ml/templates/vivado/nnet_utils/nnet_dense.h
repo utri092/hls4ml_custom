@@ -121,15 +121,15 @@ void dense_latency(
         // For parallel inputs:
         //   - completely partition arrays -- target fabric
         //   - if we have an unroll factor, limit number of multipliers
-        #pragma HLS PIPELINE II=CONFIG_T::reuse_factor
+        #pragma HLS pipeline II=CONFIG_T::reuse_factor
 
-        // #pragma HLS ARRAY_PARTITION variable=weights complete // remove this line for now, it breaks compression sometimes
-        #pragma HLS ARRAY_PARTITION variable=biases complete
-        #pragma HLS ARRAY_PARTITION variable=mult complete
-        #pragma HLS ARRAY_PARTITION variable=acc complete
+        // #pragma HLS array_partition variable=weights complete // remove this line for now, it breaks compression sometimes
+        #pragma HLS array_partition variable=biases complete
+        #pragma HLS array_partition variable=mult complete
+        #pragma HLS array_partition variable=acc complete
 
         int multiplier_limit  = ceil(float(CONFIG_T::n_in*CONFIG_T::n_out) / float(CONFIG_T::reuse_factor)) - floor(float(CONFIG_T::n_zeros) / float(CONFIG_T::reuse_factor));
-        #pragma HLS ALLOCATION instances=product limit=multiplier_limit function
+        #pragma HLS allocation instances=product limit=multiplier_limit function
 
     } else if (CONFIG_T::io_type == io_serial){
         // Only reduce cycle_factor if n_out is evenly divisible by reuse_factor
@@ -145,27 +145,27 @@ void dense_latency(
             // Dont use "ceil" here; as of 2018.2, HLS crashes mysteriously
             cycle_factor = cycle_factor / CONFIG_T::reuse_factor;
         }*/
-        #pragma HLS ARRAY_PARTITION variable=weights cyclic factor=cycle_factor
-        #pragma HLS ARRAY_PARTITION variable=mult cyclic factor=cycle_factor
-        #pragma HLS ARRAY_PARTITION variable=acc complete
-        #pragma HLS DATAFLOW
-        #pragma HLS STREAM variable=mult depth=1
-        #pragma HLS STREAM variable=acc depth=1
+        #pragma HLS array_partition variable=weights cyclic factor=cycle_factor
+        #pragma HLS array_partition variable=mult cyclic factor=cycle_factor
+        #pragma HLS array_partition variable=acc complete
+        #pragma HLS dataflow
+        #pragma HLS stream variable=mult depth=1
+        #pragma HLS stream variable=acc depth=1
         if (CONFIG_T::store_weights_in_bram){
-            #pragma HLS RESOURCE variable=weights core=ROM_2P_BRAM
+            #pragma HLS resource variable=weights core=ROM_2P_BRAM
         }
     }
 
     // Do the matrix-multiply
     Product1: for(int ii = 0; ii < CONFIG_T::n_in; ii++) {
         if (CONFIG_T::io_type == io_serial){
-            #pragma HLS PIPELINE
+            #pragma HLS pipeline
         }
         cache = data[ii];
         Product2: for(int jj = 0; jj < CONFIG_T::n_out; jj++) {
             if (CONFIG_T::io_type == io_serial) {
                 int multiplier_limit  = ceil(float(CONFIG_T::n_out) / float(CONFIG_T::reuse_factor));
-                #pragma HLS ALLOCATION instances=product limit=multiplier_limit function
+                #pragma HLS allocation instances=product limit=multiplier_limit function
             }
         int index = ii*CONFIG_T::n_out+jj;
         mult[index] = product<data_T, typename CONFIG_T::weight_t, typename CONFIG_T::accum_t>(cache, weights[index]);
@@ -175,7 +175,7 @@ void dense_latency(
     // Initialize accumulator with input biases
     ResetAccum: for(int iacc = 0; iacc < CONFIG_T::n_out; iacc++) {
         if (CONFIG_T::io_type == io_serial){
-            #pragma HLS UNROLL
+            #pragma HLS unroll
         }
         acc[iacc] = (typename CONFIG_T::accum_t) biases[iacc];
     }
@@ -183,7 +183,7 @@ void dense_latency(
     // Accumulate multiplication result
     Accum1: for(int ii = 0; ii < CONFIG_T::n_in; ii++) {
         if (CONFIG_T::io_type == io_serial){
-            #pragma HLS PIPELINE
+            #pragma HLS pipeline
         }
         Accum2: for(int jj = 0; jj < CONFIG_T::n_out; jj++) {
         int index = ii*CONFIG_T::n_out+jj;
@@ -194,7 +194,7 @@ void dense_latency(
     // Cast to "res_t" type
     Result: for(int ires = 0; ires < CONFIG_T::n_out; ires++){
         if (CONFIG_T::io_type == io_serial){
-            #pragma HLS UNROLL
+            #pragma HLS unroll
         }
         //res[ires] = (res_T) (acc[ires]);
         res[ires] = cast<data_T, res_T, CONFIG_T>(acc[ires]);
