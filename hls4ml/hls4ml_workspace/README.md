@@ -5,6 +5,8 @@ Reads Keras model json for architecture and hdf5 for weights and biases.
 Alternatively, specify whole model in hdf5. Json file is not needed
 The interface needs to be changed in the generated folder to match Zynq Processing System
 
+**Note:-** Instructions to change interface for Zynq System is in *Zynq_Interface_Code_Files/README.md*
+
 # Configuration
 
 Configuration options for the HLS translation of Keras models in *keras_configs/keras-config-x.yml* files.
