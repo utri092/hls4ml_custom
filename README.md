@@ -16,7 +16,7 @@ Vivado Design Suite == 2020.1
 4) Upgrade pip using `pip install --upgrade pip`
 
 ## Install Dependencies
-**Note:-** Directory for installing dependencies is *hls4ml_custom/hls4ml*
+**Note:-** Directory for installing dependencies is *hls4ml_custom/hls4ml/*
  ```
  cd ../
  pip install .
