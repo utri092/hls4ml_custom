@@ -19,13 +19,11 @@ HLSConfig:
     Strategy: Latency
   LayerType:
     Dense:
-      # ReuseFactor: 1
       Precision: 
         weight: ap_fixed<64,32>
         bias: ap_fixed<64,32>
         result: ap_fixed<64,32>
     Relu:
-      # ReuseFactor: 1
       Precision: ap_fixed<64,32>
 
        

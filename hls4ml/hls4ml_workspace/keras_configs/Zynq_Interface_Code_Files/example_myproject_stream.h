@@ -33,12 +33,25 @@ typedef ap_axiu<32, 2, 5, 6> featuresSdCh;
 
 #include "defines.h"
 
-// Instream and outstream
-// -> Instream (1st value is time, 2nd id)
-// -> outstream (occupancy)
+
 // Prototype of top level function for C-synthesis
 
-//Change size according to expected stream size
+
+
+// hls4ml generated prototype
+void myproject(
+    input_t input1[N_INPUT_1_1],
+    result_t layer11_out[N_LAYER_10],
+    unsigned short &const_size_in_1,
+    unsigned short &const_size_out_1
+);  
+
+
+// AXI Stream prototype 
+// Instream and outstream
+// -> Instream (1st value is time, 2nd id)
+// <- outstream (occupancy)
+// <- size (size of expected inStream). Read only access
 void myproject(stream<featuresSdCh> &inStream, stream<featuresSdCh> &outStream, unsigned short &size);
 
 #endif

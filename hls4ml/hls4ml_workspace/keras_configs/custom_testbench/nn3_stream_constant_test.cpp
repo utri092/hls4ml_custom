@@ -41,7 +41,7 @@ int main(int argc, char **argv)
 
 	  stream<featuresSdCh>  inStream, outStream;
 
-	  const unsigned int row_length = 2;
+	  const unsigned int row_length = N_INPUT_1_1; // Insert input layer size from myproject.h
 	  unsigned short size = 10;
 	  unsigned int time = 1586381880;
 	  unsigned int id = 1;

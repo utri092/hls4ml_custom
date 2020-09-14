@@ -24,9 +24,10 @@ Examples are in the directory: `example-keras-model-files`
 # Instructions to run. 
 
 ## Generates the HLS project
-## HLS4ML generates the project in a directory called 
-## A seperate directory called Firmware is generated. This does not ...., this does .... 
-## performs a C-Simulation in terminal (to see program behavior before synthesis)
+### -> HLS4ML generates the project in a directory called my-hls-test/
+### -> Performs a C-Simulation in terminal (to see program behavior before synthesis)
+
+Put desired config file name in createHLSProject.sh and run
 ```
 chmod +x createHLSProject.sh
 ./createHLSProject.sh
