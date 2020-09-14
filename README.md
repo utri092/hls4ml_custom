@@ -18,7 +18,6 @@ Vivado Design Suite == 2020.1
 ## Install Dependencies
 **Note:-** Directory for installing dependencies is *hls4ml_custom/hls4ml/*
  ```
- cd ../
  pip install .
  ```
 ## Run Instructions
