@@ -10,7 +10,7 @@ Vivado Design Suite == 2020.1
 # Installation Instructions
 ## Setup Venv
 **Note:-** Virtual Environment name should be the one below as configurations use it
-1) Clone repo and cd into `hls4ml_custom/hls4ml/
+1) Clone repo and `cd hls4ml_custom/hls4ml/`
 2) Create a virtual environment by `python3 -m venv pyHLSVenv`
 3) Activate virtual environment `source pyHLSVenv/bin/activate`
 4) Upgrade pip using `pip install --upgrade pip`
