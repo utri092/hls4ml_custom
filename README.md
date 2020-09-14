@@ -21,3 +21,5 @@ Vivado Design Suite == 2020.1
  cd ../
  pip install .
  ```
+## Run Instructions
+Refer to hls4ml_custom/hls4ml/hls4ml_workspace/README.md
