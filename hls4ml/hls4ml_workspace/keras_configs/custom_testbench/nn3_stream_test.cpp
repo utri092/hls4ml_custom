@@ -30,6 +30,7 @@
 using namespace hls;
 using namespace std;
 
+
 namespace nnet {
     bool trace_enabled = true;
     std::map<std::string, void *> *trace_outputs = NULL;
@@ -42,15 +43,21 @@ int main(int argc, char **argv)
 	  stream<featuresSdCh>  inStream, outStream;
 
 	  const unsigned int row_length = N_INPUT_1_1; // Insert input layer size from myproject.h
-	  unsigned short size = 10;
+	  unsigned int len = 10;
 	  unsigned int time = 1586381880;
 	  unsigned int id = 1;
+	  bool isFirst = true;
 
-	  for(int i = 0;  i <= (size-row_length); i+=row_length){
+	  for(int i = 0;  i <= (len -row_length); i+=row_length){
 
 		  	  for(int j = 0; j < row_length; j++){
 		  		  featuresSdCh valIn;
 
+		  		  if(isFirst){
+		  			  isFirst = false;
+		  		  }else{
+		  			  time += 60;
+		  		  }
 
 		  		  valIn.data = time;
 		  		  inStream.write(valIn);
@@ -60,12 +67,23 @@ int main(int argc, char **argv)
 
 		  	  }
 	  }
+	  bool isFirst = true;
+	  unsigned int max_size;
 
-	  myproject(inStream, outStream, size);
+	  myproject(inStream, outStream, max_size);
 
-	  for(int i = 0; i < size/row_length; i++){
+	  //Reset time and first iteration
+	  time = 1586381880;
+	  isFirst = true;
+	  while(!outStream.empty()){
 		  featuresSdCh valOut;
 		  outStream.read(valOut);
+
+		  if(isFirst){
+			  isFirst = false;
+		  }else{
+			  time += 60;
+		  }
 
 		  cout<< "HW Prediction: "<< valOut.data << " Input: "<< time << " "<< id<<endl;
 
