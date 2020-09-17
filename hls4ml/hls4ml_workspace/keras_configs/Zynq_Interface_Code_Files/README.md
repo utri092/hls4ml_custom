@@ -43,10 +43,8 @@ void myproject(stream<featuresSdCh> &inStream, stream<featuresSdCh> &outStream, 
 Check example_myproject_stream.cpp for instructions on changing myproject.cpp
 
 ### Test Bench Code Replacement
-Replace code in myproject_test.cpp with code in keras_configs/custom_testbench/nn3_stream_constant_test.cpp.  
-Alternatively, add the test bench file and make it the target testbench.
-**Note:-** *nn3_stream_constant_test.cpp* corresponds to example_my_project_stream.cpp  
-           *nn3_stream_constant_test_2.cpp* corresponds to example_my_project_stream_2.cpp    
+Replace code in *myproject_test.cpp* with code in *keras_configs/custom_testbench/parking_model_stream_test.cpp*.  
+Alternatively, add the test bench file and make it the target testbench.  
 	   
 	
 
