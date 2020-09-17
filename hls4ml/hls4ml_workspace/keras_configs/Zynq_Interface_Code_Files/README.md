@@ -17,7 +17,7 @@ with:-
  #pragma HLS INTERFACE s_axilite port=<const size variable> bundle=CTRL_BUS
 ```
 
-**Note:-** No of `<const_size_variable` should be the same as no of input/output  
+**Note:-** No of `<const_size_variable>` should be the same as no of input/output  
 
 # AXI_STREAM Protocol
 
