@@ -4,7 +4,6 @@
 */
 
 #include <iostream>
-
 #include "example_myproject_stream_2.h"
 #include "parameters.h"
 
@@ -43,8 +42,8 @@ void myproject(stream<featuresSdCh> &inStream, stream<featuresSdCh> &outStream)
 **/
 
 
-	input_t input1[row_length];
-	result_t layer11_out[N_LAYER_10];
+	<hls4ml_generated_dataType> <input_layer_name>[row_length];
+	<hls4ml_generated_dataType> <output_layer_name>[N_LAYER_10];
 
 	// Axi stream data type in myproject.h for reading/writing to input/output streams respectively
 	featuresSdCh valIn, valOut;
@@ -56,21 +55,21 @@ void myproject(stream<featuresSdCh> &inStream, stream<featuresSdCh> &outStream)
 			#pragma HLS pipeline
 
 			unsigned int j;
-			//Reads inputs from input stream and puts in hls4ml generated input array
-			loop1: for(j = 0 ; j <  row_length; j++){
+			//Read inputs from input stream and puts in hls4ml generated input array
+			for(j = 0 ; j <  row_length; j++){
 				// Parallelise assignments
 				#pragma HLS unroll
-
+				
 				inStream.read(valIn);
-
-				input1[j] = valIn.data;
+				
+				<input_layer_name>[j] = valIn.data;
 			}
 
 			/******************  NN functions reside here **************************/
 
 			// Write to output Stream after NN functions
 			// Output layer returns an array of size 1 in this example
-			valOut.data = layer11_out[0];
+			valOut.data = <output_layer_name>[0];
 
 			valOut.keep = valIn.keep;
 			valOut.strb = valIn.strb;

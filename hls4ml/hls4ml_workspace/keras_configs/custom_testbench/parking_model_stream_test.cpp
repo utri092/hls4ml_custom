@@ -35,6 +35,7 @@ namespace nnet {
     size_t trace_type_size = sizeof(double);
 }
 
+// No of inputs to process
 #define LIMIT 10
 
 int main(int argc, char **argv)

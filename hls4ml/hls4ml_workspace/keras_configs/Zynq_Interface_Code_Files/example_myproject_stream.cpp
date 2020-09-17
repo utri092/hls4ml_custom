@@ -3,7 +3,6 @@
  Example AXI Stream top level file
 */
 #include <iostream>
-
 #include "example_myproject_stream.h"
 #include "parameters.h"
 
@@ -55,6 +54,12 @@ void myproject(stream<featuresSdCh> &inStream, stream<featuresSdCh> &outStream, 
 			  to hls4ml generated input array. (Check myproject.h for datatype name)	
 	**/
 
+	<hls4ml_generated_dataType> <input_layer_name>[row_length];
+	<hls4ml_generated_dataType> <output_layer_name>[N_LAYER_10];
+
+	// Axi stream data type in myproject.h for reading/writing to input/output streams respectively
+	featuresSdCh valIn, valOut;
+
     	unsigned int i;
 	loop1: for(i = 0; i <= (max_size - row_length); i+=row_length)
 	{	
@@ -65,12 +70,6 @@ void myproject(stream<featuresSdCh> &inStream, stream<featuresSdCh> &outStream, 
 			break;
 		}else{
 			
-			<hls4ml_generated_dataType> <input_layer_name>[row_length];
-			<hls4ml_generated_dataType> <output_layer_name>[N_LAYER_10];
-
-			// Axi stream data type in myproject.h for reading/writing to input/output streams respectively
-			featuresSdCh valIn, valOut;
-
 			unsigned int j;
 			//Read inputs from input stream and puts in hls4ml generated input array
 			loop2: for(j = 0 ; j <  row_length; j++){

@@ -55,6 +55,7 @@ Check *example_myproject_stream.cpp* or *example_myproject_stream_2.cpp* for ins
 ### Test Bench Code Replacement
 Replace code in *myproject_test.cpp* with code in *keras_configs/custom_testbench/parking_model_stream_test.cpp*.  
 Alternatively, add the test bench file and make it the target testbench.  
+Change LIMIT macro in *parking_model_stream_test.cpp* to desired no of values to read and test against from the given .dat files
 	   
 	
 
