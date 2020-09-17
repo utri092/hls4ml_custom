@@ -96,6 +96,7 @@ void myproject(stream<featuresSdCh> &inStream, stream<featuresSdCh> &outStream)
 			outStream.write(valOut);
 
 	}
+
 }
 
 
