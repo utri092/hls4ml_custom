@@ -1,6 +1,6 @@
 The Zynq Processing System uses AXILITE and AXISTREAM protocols to communicate with IP blocks
 
-# AXILITE Protocol
+# AXI_LITE Protocol
 
 ### Source File Code Replacement:
 In myproject.cpp, right after the top level definition void myproject()
@@ -17,9 +17,11 @@ with:-
  #pragma HLS INTERFACE s_axilite port=<const size variable> bundle=CTRL_BUS
 ```
 
+**Note:-** No of `<const_size_variable` should be the same as no of input/output  
+
 # AXI_STREAM Protocol
 
-Got to myproject.h and take a note of the input/output dataType and array size of generated protoype function
+Go to myproject.h and take a note of the input/output dataType and array size of generated protoype function
 
 ### Header File Code Replacement:
 
@@ -36,11 +38,19 @@ void myproject(
 
 with:-  
 ```
-void myproject(stream<featuresSdCh> &inStream, stream<featuresSdCh> &outStream, unsigned short &size);
+void myproject(stream<featuresSdCh> &inStream, stream<featuresSdCh> &outStream, unsigned int &max_size);
 ```
+**Note:-** Above interface is for implementation in *example_myproject_stream.h*  
+
+or:-
+
+```
+void myproject(stream<featuresSdCh> &inStream, stream<featuresSdCh> &outStream);
+```
+**Note:-** Above interface is for implementation in *example_myproject_stream_2.h*  
 
 ### Source File Code Replacement:
-Check example_myproject_stream.cpp for instructions on changing myproject.cpp
+Check *example_myproject_stream.cpp* or *example_myproject_stream_2.cpp* for instructions on changing myproject.cpp
 
 ### Test Bench Code Replacement
 Replace code in *myproject_test.cpp* with code in *keras_configs/custom_testbench/parking_model_stream_test.cpp*.  

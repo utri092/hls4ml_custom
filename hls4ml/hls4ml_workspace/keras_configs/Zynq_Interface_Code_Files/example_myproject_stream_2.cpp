@@ -34,8 +34,8 @@ void myproject(stream<featuresSdCh> &inStream, stream<featuresSdCh> &outStream)
 	// input_layer_array_size will be given in myproject.h
 	const unsigned int row_length = N_INPUT_1_1;
 
-	// Default if none specified
 
+/** DO NOT COPY. Only to show where to place code in actual main file
 #ifndef __SYNTHESIS__
     static bool loaded_weights = false;
     if (!loaded_weights) {
@@ -53,12 +53,8 @@ void myproject(stream<featuresSdCh> &inStream, stream<featuresSdCh> &outStream)
         loaded_weights = true;
     }
 #endif
+**/
 
-    // ****************************************
-    // NETWORK INSTANTIATION
-    // ****************************************
-
-    //hls-fpga-machine-learning insert layers
 
 	input_t input1[row_length];
 	result_t layer11_out[N_LAYER_10];
@@ -73,8 +69,8 @@ void myproject(stream<featuresSdCh> &inStream, stream<featuresSdCh> &outStream)
 			#pragma HLS pipeline
 
 			unsigned int j;
-			//Read inputs from input stream and puts in hls4ml generated input array
-			for(j = 0 ; j <  row_length; j++){
+			//Reads inputs from input stream and puts in hls4ml generated input array
+			loop1: for(j = 0 ; j <  row_length; j++){
 				// Parallelise assignments
 				#pragma HLS unroll
 
@@ -82,6 +78,8 @@ void myproject(stream<featuresSdCh> &inStream, stream<featuresSdCh> &outStream)
 
 				input1[j] = valIn.data;
 			}
+
+			/******************  NN functions reside here **************************/
 
 			// Write to output Stream after NN functions
 			// Output layer returns an array of size 1 in this example

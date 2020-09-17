@@ -25,6 +25,27 @@ void myproject(stream<featuresSdCh> &inStream, stream<featuresSdCh> &outStream, 
 	max_size = 0xFFFFFFFF;
 
 
+/** DO NOT COPY. Only to show where to place code in actual main file
+#ifndef __SYNTHESIS__
+    static bool loaded_weights = false;
+    if (!loaded_weights) {
+        //hls-fpga-machine-learning insert load weights
+        nnet::load_weights_from_txt<Dense_weight_t, 4>(w2, "w2.txt");
+        nnet::load_weights_from_txt<Dense_bias_t, 2>(b2, "b2.txt");
+        nnet::load_weights_from_txt<Dense_weight_t, 10>(w4, "w4.txt");
+        nnet::load_weights_from_txt<Dense_bias_t, 5>(b4, "b4.txt");
+        nnet::load_weights_from_txt<Dense_weight_t, 25>(w6, "w6.txt");
+        nnet::load_weights_from_txt<Dense_bias_t, 5>(b6, "b6.txt");
+        nnet::load_weights_from_txt<Dense_weight_t, 25>(w8, "w8.txt");
+        nnet::load_weights_from_txt<Dense_bias_t, 5>(b8, "b8.txt");
+        nnet::load_weights_from_txt<Dense_weight_t, 5>(w10, "w10.txt");
+        nnet::load_weights_from_txt<Dense_bias_t, 1>(b10, "b10.txt");
+        loaded_weights = true;
+    }
+#endif
+**/
+
+
 	/** A nested for loop is needed for iterating through input stream in a 2D manner.
 		-> loop1: Waits on loop2 to read a row of features from input_stream for feeding into input_layer datatype of neural network,
 			  Assigns control signals to output variable
