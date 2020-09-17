@@ -75,6 +75,7 @@ void myproject(stream<featuresSdCh> &inStream, stream<featuresSdCh> &outStream)
 			unsigned int j;
 			//Read inputs from input stream and puts in hls4ml generated input array
 			for(j = 0 ; j <  row_length; j++){
+				// Parallelise assignments
 				#pragma HLS unroll
 
 				inStream.read(valIn);

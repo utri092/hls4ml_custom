@@ -27,10 +27,10 @@ void myproject(stream<featuresSdCh> &inStream, stream<featuresSdCh> &outStream, 
 
 	/** A nested for loop is needed for iterating through input stream in a 2D manner.
 		-> loop1: Waits on loop2 to read a row of features from input_stream for feeding into input_layer datatype of neural network,
-			  Writes output (prediction) from last layer to outputStream,
- 			  Assigns TLAST(End of transaction) control signal to output stream
+			  Assigns control signals to output variable
+			  Writes output (prediction) from last layer to outputStream
 				  
-		-> loop2: Reads value from input_Stream, assigns control signals to output variable and assigns data
+		-> loop2: Reads value from input_Stream and assigns data
 			  to hls4ml generated input array. (Check myproject.h for datatype name)	
 	**/
 
