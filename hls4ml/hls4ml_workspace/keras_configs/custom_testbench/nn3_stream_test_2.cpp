@@ -68,8 +68,8 @@ int main(int argc, char **argv)
 		  	  }
 	  }
 
-	  unsigned int max_size;
-	  myproject(inStream, outStream, max_size);
+
+	  myproject(inStream, outStream);
 
 	  //Reset time and first iteration
 	  time = 1586381880;

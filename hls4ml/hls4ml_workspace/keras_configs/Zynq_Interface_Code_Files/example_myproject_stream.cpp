@@ -4,7 +4,7 @@
 */
 #include <iostream>
 
-#include "myproject.h"
+#include "example_myproject_stream.h"
 #include "parameters.h"
 
 
@@ -35,7 +35,7 @@ void myproject(stream<featuresSdCh> &inStream, stream<featuresSdCh> &outStream, 
 	**/
 
     	unsigned int i;
-	loop1: for(i = 0; i <= (size - row_length); i+=row_length)
+	loop1: for(i = 0; i <= (max_size - row_length); i+=row_length)
 	{	
 		// For concurrent execution and sharing HW resources
 		#pragma HLS pipeline
