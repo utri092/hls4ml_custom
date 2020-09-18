@@ -53,9 +53,13 @@ void myproject(stream<featuresSdCh> &inStream, stream<featuresSdCh> &outStream);
 Check *example_myproject_stream.cpp* or *example_myproject_stream_2.cpp* for instructions on changing myproject.cpp
 
 ### Test Bench Code Replacement
-Replace code in *myproject_test.cpp* with code in *keras_configs/custom_testbench/parking_model_stream_test.cpp*.  
-Alternatively, add the test bench file and make it the target testbench.  
-Change LIMIT macro in *parking_model_stream_test.cpp* to desired no of values to read and test against from the given .dat files
+1) Replace code in *myproject_test.cpp* with code in *keras_configs/custom_testbench/parking_model_stream_test.cpp*.  
+2) Alternatively, add the test bench file and make it the target testbench.  
+Either:-
+3a) Change LIMIT macro in *parking_model_stream_test.cpp* to desired no of values to read and test against from the given .dat files.
+or:-
+3b) Input desired input values in *parking_model_stream_single_records_test.cpp* features vector.
+4) Copy-paste 3a) or 3b) code contents in *myproject_test.cpp*.
 	   
 	
 
