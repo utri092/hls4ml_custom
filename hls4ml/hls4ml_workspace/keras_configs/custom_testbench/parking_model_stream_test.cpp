@@ -94,12 +94,27 @@ int main(int argc, char **argv)
 	myproject(inStream, outStream, max_size);
 
 	featuresSdCh valOut;
+	double accuracy;
+	double difference;
+	unsigned int percent;
+	double hw_prediction;
 
 	cout<< "INFO: Processing "<< LIMIT <<" inputs"<<endl;
 	for(int i = 0;  i < LIMIT; i++){
 	  outStream.read(valOut);
 
-	  cout<< "HW Prediction: "<< valOut.data << " Expected Prediction: "<< expected_outputs[i] <<endl;
+	  hw_prediction = (double) valOut.data;
+
+	  difference = abs(expected_outputs[i] - hw_prediction);
+
+	  if(difference < 0){
+		  difference *= -1;
+	  }
+
+	  accuracy =  (difference / expected_outputs[i]);
+	  percent = 100 - (accuracy * 100);
+
+	  cout<< "HW Prediction: "<< valOut.data << " Expected Prediction: "<< expected_outputs[i] <<" Accuracy: "<<percent<<"%"<<endl;
 	}
 
   } else {
@@ -111,4 +126,3 @@ int main(int argc, char **argv)
 
   return 0;
 }
-
