@@ -97,20 +97,12 @@ int main(int argc, char **argv)
 	double accuracy;
 	double difference;
 	unsigned int percent;
-	double hw_prediction;
 
 	cout<< "INFO: Processing "<< LIMIT <<" inputs"<<endl;
 	for(int i = 0;  i < LIMIT; i++){
 	  outStream.read(valOut);
 
-	  hw_prediction = (double) valOut.data;
-
-	  difference = abs(expected_outputs[i] - hw_prediction);
-
-	  if(difference < 0){
-		  difference *= -1;
-	  }
-
+	  difference = abs((double) expected_outputs[i] - (double) valOut.data);
 	  accuracy =  (difference / expected_outputs[i]);
 	  percent = 100 - (accuracy * 100);
 
@@ -126,3 +118,4 @@ int main(int argc, char **argv)
 
   return 0;
 }
+
