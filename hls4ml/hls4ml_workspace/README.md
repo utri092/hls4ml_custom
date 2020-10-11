@@ -12,7 +12,7 @@ The interface needs to be changed in the generated folder to match Zynq Processi
 Configuration options for the HLS translation of Keras models in *keras_configs/keras-config-x.yml* files.
 
 *KerasJson, KerasH5*: For Keras translation, you are required to provide `json` and `h5` model files.  
-Examples are in the directory: `example-keras-model-files`
+Examples are in the directory: `trainedKerasFormatModel`
 
 *OutputDir*: Directory where your HLS project will go
 
