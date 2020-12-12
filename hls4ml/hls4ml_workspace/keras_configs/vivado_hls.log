@@ -1,0 +1,13 @@
+
+****** Vivado(TM) HLS - High-Level Synthesis from C, C++ and SystemC v2020.1 (64-bit)
+  **** SW Build 2902540 on Wed May 27 19:54:35 MDT 2020
+  **** IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+source /home/smartparking/Xilinx/Vivado/2020.1/scripts/vivado_hls/hls.tcl -notrace
+INFO: [HLS 200-10] Running '/home/smartparking/Xilinx/Vivado/2020.1/bin/unwrapped/lnx64.o/vivado_hls'
+INFO: [HLS 200-10] For user 'smartparking' on host 'host-pc' (Linux_x86_64 version 5.4.0-42-generic) on Sat Dec 12 16:39:43 NZDT 2020
+INFO: [HLS 200-10] On os Ubuntu 18.04.5 LTS
+INFO: [HLS 200-10] In directory '/home/smartparking/hls4ml_custom/hls4ml/hls4ml_workspace/keras_configs'
+ERROR [AP-1] Could not read script 'build_prj.tcl'.
+INFO: [Common 17-206] Exiting vivado_hls at Sat Dec 12 16:39:44 2020...

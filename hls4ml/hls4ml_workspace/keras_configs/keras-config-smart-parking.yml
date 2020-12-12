@@ -6,11 +6,13 @@ InputData: simFiles/inputs.npy
 OutputPredictions: simFiles/outputs.npy
 OutputDir: my-hls-test
 ProjectName: myproject
-XilinxPart: xc7z020clg400-1
+## ZCU104
+XilinxPart: xczu7ev-ffvc1156-2-e
+## Pynq Z2
+#XilinxPart: xc7z020clg400-1
 # In ns
 ClockPeriod: 10
 Backend: Vivado
-
 IOType: io_parallel # options: io_serial/io_parallel
 HLSConfig:
   Model:
