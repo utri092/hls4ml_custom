@@ -1,6 +1,6 @@
 
 /*
- Example AXI Stream top level file
+ Example AXI Stream top level file.
 */
 #include <iostream>
 #include "example_myproject_stream.h"
@@ -55,7 +55,7 @@ void myproject(stream<featuresSdCh> &inStream, stream<featuresSdCh> &outStream, 
 	**/
 
 	<hls4ml_generated_dataType> <input_layer_name>[row_length];
-	<hls4ml_generated_dataType> <output_layer_name>[N_LAYER_10];
+	<hls4ml_generated_dataType> <output_layer_name>[LastLayerMacro];
 
 	// Axi stream data type in myproject.h for reading/writing to input/output streams respectively
 	featuresSdCh valIn, valOut;

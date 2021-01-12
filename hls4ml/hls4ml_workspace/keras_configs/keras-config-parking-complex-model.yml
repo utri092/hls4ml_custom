@@ -1,15 +1,15 @@
 # Model Architecture (Only if weights are specified)
 # KerasJson: parkingModels/model2.json
 # Model weights or whole model in .h5 format
-KerasH5: trainedModelKerasFormat/model.h5
+KerasH5: trainedModelKerasFormat/ComplexModel.h5
 InputData: simFiles/inputs.npy
 OutputPredictions: simFiles/outputs.npy
 OutputDir: my-hls-test
 ProjectName: myproject
 ## ZCU104
-#XilinxPart: xczu7ev-ffvc1156-2-e
+XilinxPart: xczu7ev-ffvc1156-2-e
 ## Pynq Z2
-XilinxPart: xc7z020clg400-1
+#XilinxPart: xc7z020clg400-1
 # In ns
 ClockPeriod: 10
 Backend: Vivado
@@ -17,7 +17,7 @@ IOType: io_parallel # options: io_serial/io_parallel
 HLSConfig:
   Model:
     Precision: ap_uint<32>
-    ReuseFactor: 7
+    ReuseFactor: 1
     Strategy: Latency
   LayerType:
     Dense:
@@ -26,4 +26,4 @@ HLSConfig:
         bias: ap_fixed<64,32>
         result: ap_fixed<64,32>
     Relu:
-      Precision: ap_fixed<64,32>
+      Precision: ap_ufixed<64,32>

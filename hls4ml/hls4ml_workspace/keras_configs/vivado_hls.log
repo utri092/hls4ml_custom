@@ -6,8 +6,8 @@
 
 source /home/smartparking/Xilinx/Vivado/2020.1/scripts/vivado_hls/hls.tcl -notrace
 INFO: [HLS 200-10] Running '/home/smartparking/Xilinx/Vivado/2020.1/bin/unwrapped/lnx64.o/vivado_hls'
-INFO: [HLS 200-10] For user 'smartparking' on host 'host-pc' (Linux_x86_64 version 5.4.0-42-generic) on Sat Dec 12 16:39:43 NZDT 2020
+INFO: [HLS 200-10] For user 'smartparking' on host 'host-pc' (Linux_x86_64 version 5.4.0-42-generic) on Tue Dec 29 20:28:05 NZDT 2020
 INFO: [HLS 200-10] On os Ubuntu 18.04.5 LTS
 INFO: [HLS 200-10] In directory '/home/smartparking/hls4ml_custom/hls4ml/hls4ml_workspace/keras_configs'
 ERROR [AP-1] Could not read script 'build_prj.tcl'.
-INFO: [Common 17-206] Exiting vivado_hls at Sat Dec 12 16:39:44 2020...
+INFO: [Common 17-206] Exiting vivado_hls at Tue Dec 29 20:28:05 2020...
