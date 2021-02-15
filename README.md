@@ -1,6 +1,6 @@
 # hls4ml_custom
 Custom hls4ml release for UoA final year project  
-**Orignal Creator:-** https://hls-fpga-machine-learning.github.io/hls4ml/
+**Orignal Creator:-** https://fastmachinelearning.org/hls4ml/
 
 # OS and Tools
 Ubuntu 18.04.5  
