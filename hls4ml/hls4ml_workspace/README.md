@@ -35,6 +35,6 @@ chmod +x createHLSProject.sh
 ```
 ### Run GUI for Vivado HLS
 ```
-chmod +x launchGeneratedProject.sh
-./launchGeneratedProject.sh
+chmod +x launchHLSProject.sh
+./launchHLSProject.sh
 ```
