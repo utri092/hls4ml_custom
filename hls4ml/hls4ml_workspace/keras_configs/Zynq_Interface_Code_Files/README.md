@@ -1,6 +1,6 @@
 The Zynq Processing System uses AXILITE and AXISTREAM protocols to communicate with IP blocks
 
-# AXI_LITE Protocol
+# AXI_LITE Protocol Only
 
 ### Source File Code Replacement:
 In myproject.cpp, right after the top level definition void myproject()
@@ -19,14 +19,23 @@ with:-
 
 **Note:-** No of `<const_size_variable>` should be the same as no of input/output  
 
-# AXI_STREAM Protocol
+# AXI_STREAM and AXI_LITE Protocol
 
 Go to myproject.h and take a note of the input/output dataType and array size of generated protoype function
 
 ### Header File Code Replacement:
 
 Size of input layer is equal to N_INPUT_1_1 and output_layer is N_LAYER_10.  
-In myproject.h, replace the below code:-  
+In myproject.h, replace or comment out the below code:-  
+
+```
+#include "ap_int.h"
+#include "ap_fixed.h"
+
+#include "defines.h"
+
+```
+
 ```
 void myproject(
     input_t input1[N_LAYER_1_1],
@@ -34,9 +43,26 @@ void myproject(
     unsigned short &const_size_in_1,
     unsigned short &const_size_out_1
 );
+
 ```
 
 with:-  
+
+```
+#include "ap_int.h"	`
+#include "ap_fixed.h"
+#include <iostream>
+#include <hls_stream.h>
+#include <ap_axi_sdata.h>
+
+
+using namespace hls;
+
+typedef ap_axiu<32, 2, 5, 6> featuresSdCh;
+
+#include "defines.h"
+```
+
 ```
 void myproject(stream<featuresSdCh> &inStream, stream<featuresSdCh> &outStream, unsigned int &max_size);
 ```
@@ -52,7 +78,7 @@ void myproject(stream<featuresSdCh> &inStream, stream<featuresSdCh> &outStream);
 ### Source File Code Replacement:
 Check *example_myproject_stream.cpp* or *example_myproject_stream_2.cpp* for instructions on changing myproject.cpp
 
-### Test Bench Code Replacement
+### Test Bench Code Replacement (Optional)
 1. Replace code in *myproject_test.cpp* with code in *keras_configs/custom_testbench/parking_model_stream_test.cpp*.  
 2. Alternatively, add the test bench file and make it the target testbench.  
 3. Either:-      
@@ -62,4 +88,3 @@ Check *example_myproject_stream.cpp* or *example_myproject_stream_2.cpp* for ins
 4. Copy-paste 3a or 3b code contents in *myproject_test.cpp*.
 	   
 	
-
